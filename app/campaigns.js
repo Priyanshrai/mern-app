@@ -1,14 +1,17 @@
 "use client";
+// At the beginning of your file, ensure these imports:
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PieChart, Pie, Tooltip, Cell, Legend, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Loader from 'react-loader-spinner'; // Ensure this is installed
+import { Bars } from 'react-loader-spinner';
+import './CampaignsDashboard.css'; // Assuming you have a CSS file for additional styles
 
 const CampaignsDashboard = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [engagementData, setEngagementData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loaderColor, setLoaderColor] = useState('#00BFFF');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,29 +35,25 @@ const CampaignsDashboard = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const colors = ['#00BFFF', '#ff4500', '#32CD32', '#FFD700', '#FF69B4'];
+    const intervalId = setInterval(() => {
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      setLoaderColor(color);
+    }, 1000); // Change color every second
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#85144b'];
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <Loader type="Bars" color="#00BFFF" height={80} width={80} />
+      <div className="loader-container">
+        <Bars color={loaderColor} height={80} width={80} />
       </div>
     );
   }
-
-  // Improved Tooltip Component
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
-          <p>{`${label}: ${payload[0].value.toFixed(2)}%`}</p>
-          {/* You can add more details here */}
-        </div>
-      );
-    }
-
-    return null;
-  };
 
   return (
     <div className="container-fluid">
@@ -62,7 +61,7 @@ const CampaignsDashboard = () => {
       <div className="row mt-3">
         <div className="col-md-6">
           <h3 className="text-center">Budget Allocation</h3>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={500}>
             <PieChart>
               <Pie
                 dataKey="budget"
@@ -85,10 +84,32 @@ const CampaignsDashboard = () => {
         </div>
         <div className="col-md-6">
           <h3 className="text-center">Engagement Rates</h3>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={500}>
             <BarChart data={engagementData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis
+  dataKey="name"
+  height={60} // Increase height to accommodate multi-line labels
+  tick={({ payload, x, y, width, height, viewBox }) => {
+    const words = payload.value.split(' '); // Split the name into words
+    return (
+      <g transform={`translate(${x},${y})`}>
+        {words.map((word, index) => (
+          <text
+            x={0}
+            y={index * 20} // Adjust spacing between lines
+            dy={16} // Adjust vertical position
+            textAnchor="end" // Adjust based on your layout/design
+            fill="#666" // Text color
+            transform="rotate(-35)" // Optional: Rotate labels if needed
+          >
+            {word}
+          </text>
+        ))}
+      </g>
+    );
+  }}
+/>
               <YAxis />
               <Tooltip />
               <Legend />

@@ -1,0 +1,76 @@
+/* CampaignsDashboard.css */
+body {
+    background-color: #121212; /* Darker shade for deep contrast */
+    color: #E0E0E0; /* Lighter font color for readability */
+    font-family: 'Inter', sans-serif; /* Inter font for a modern look */
+  }
+  
+  .campaigns-dashboard {
+    padding: 20px;
+  }
+  
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  h2, h3 {
+    color: #F2F5F0; /* Soft white for headings */
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600; /* Medium weight for better emphasis */
+  }
+  
+  .charts-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 20px; /* Add space between charts for better separation */
+  }
+  
+  .custom-tooltip {
+    background-color: #424242; /* Dark grey for tooltips */
+    border-color: #76ff03; /* Neon green for a pop of color */
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px; /* Rounded corners for modern appearance */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  }
+  
+  .list-group-item {
+    background-color: #333; /* Dark grey for list items */
+    color: #fff;
+    border-color: #424242;
+    padding: 10px;
+    margin-bottom: 8px; /* Space between list items */
+    border-radius: 8px; /* Consistency in rounded corners */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions for interaction */
+  }
+  
+  .list-group-item:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover for depth */
+  }
+  
+  /* Button and form styles for a cohesive look */
+  button, input, select, textarea {
+    font-family: 'Inter', sans-serif; /* Ensure all form elements match the UI's font */
+    border-radius: 8px;
+    border: 1px solid #76ff03; /* Use the neon green for form elements */
+    background-color: #333;
+    color: #fff;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #424242; /* Darken button on hover for interaction feedback */
+  }
+  
